@@ -1,0 +1,7 @@
+language: ruby
+rvm:
+  - ruby-2.7.1
+
+script:
+  - make install
+  - male linter_run
