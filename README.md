@@ -19,10 +19,6 @@ Or install it yourself as:
 
     $ gem install hexlet_code
 
-## Usage
-
-TODO: Write usage instructions here
-
 ## Development
 
 After checking out the repo, run `make install`
