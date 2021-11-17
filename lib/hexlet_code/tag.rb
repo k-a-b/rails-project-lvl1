@@ -1,5 +1,4 @@
 # frozen_string_literal: true
-require 'pry'
 
 module HexletCode
   class Tag
@@ -8,7 +7,8 @@ module HexletCode
       div
       a
       html
-    ]
+    ].freeze
+
     def self.build(tag_name, **params, &block)
       new(tag_name, **params, &block).build_tag
     end
@@ -34,7 +34,7 @@ module HexletCode
     private
 
     def attrs
-      params.map{ |k, v| " #{k}=\'#{v}\'" }.join.gsub("'", '"')
+      params.map { |k, v| " #{k}=\'#{v}\'" }.join.gsub("'", '"')
     end
 
     def close_tag

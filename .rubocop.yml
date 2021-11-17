@@ -2,5 +2,8 @@ AllCops:
   TargetRubyVersion: 2.7.1
   NewCops: enable
 
+Style/Documentation:
+  Enabled: false
+
 Layout/LineLength:
   Max: 120
