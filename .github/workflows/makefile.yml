@@ -1,20 +1,20 @@
-name: Makefile CI
+name: makefile
 
-on:
-  push:
-    branches: 
-      - '**'
-  pull_request:
-    branches: [ master ]
+on: [push, pull_request]
 
 jobs:
   build:
     runs-on: ubuntu-latest
     steps:
     - uses: actions/checkout@v2
+
+    - name: Set up Ruby
+        uses: ruby/setup-ruby@477b21f02be01bcb8030d50f37cfec92bfa615b6
+        with:
+          ruby-version: 2.7.1
     
-    - name: install
+    - name: install dependencies
       run: make install
     
-    - name: Run linters
+    - name: run linters
       run: make linter_run
