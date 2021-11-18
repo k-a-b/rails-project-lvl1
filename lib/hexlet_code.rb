@@ -6,7 +6,7 @@ require_relative 'hexlet_code/tag'
 module HexletCode
   class Error < StandardError; end
 
-  def self.form_for(user, url: '#', &block)
+  def self.form_for(_user, url: '#', _&block)
     params = {
       action: url,
       method: 'post'
