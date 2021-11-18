@@ -7,6 +7,7 @@ module HexletCode
       div
       a
       html
+      form
     ].freeze
 
     def self.build(tag_name, **params, &block)
