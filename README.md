@@ -22,6 +22,7 @@ Or install it yourself as:
 ## Development
 
 After checking out the repo, run `make install`
+Run `bin/console` for play with app
 
 ## License
 
