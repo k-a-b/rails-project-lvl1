@@ -4,4 +4,4 @@ rvm:
 
 script:
   - make install
-  - male linter_run
+  - make linter_run
