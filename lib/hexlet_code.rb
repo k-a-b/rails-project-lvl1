@@ -6,7 +6,8 @@ require_relative 'hexlet_code/tag'
 module HexletCode
   class Error < StandardError; end
 
-  def self.form_for(_user, url: '#', _&block)
+  # rubocop:disable Lint/UnusedMethodArgument
+  def self.form_for(user, url: '#', &block)
     params = {
       action: url,
       method: 'post'
@@ -14,4 +15,5 @@ module HexletCode
 
     HexletCode::Tag.build('form', params)
   end
+  # rubocop:enable Lint/UnusedMethodArgument
 end
