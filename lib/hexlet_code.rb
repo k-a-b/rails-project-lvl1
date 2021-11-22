@@ -2,18 +2,45 @@
 
 require_relative 'hexlet_code/version'
 require_relative 'hexlet_code/tag'
+require 'pry'
 
 module HexletCode
   class Error < StandardError; end
 
-  # rubocop:disable Lint/UnusedMethodArgument
-  def self.form_for(user, url: '#', &block)
+  def self.form_for(user, url: '#')
+    @user = user
+
     params = {
       action: url,
       method: 'post'
     }
 
-    HexletCode::Tag.build('form', params)
+    user_attrs = yield self
+
+    HexletCode::Tag.build('form', params) { build_inside_tags(user_attrs) }
   end
-  # rubocop:enable Lint/UnusedMethodArgument
+
+  def self.input(title, as: nil)
+    @user_attributes ||= []
+
+    value = @user.public_send(title)
+
+    type =
+      case as
+      when :text
+        @user[title].is_a?(String) ? 'textarea' : raise(WrongFormatError)
+      else
+        'input'
+      end
+
+    @user_attributes << { title => value, type: type }
+  end
+
+  def self.build_inside_tags(attributes)
+    attributes.map do |attribute|
+      type = attribute.delete(:type)
+
+      HexletCode::Tag.build(type, attribute)
+    end
+  end
 end
