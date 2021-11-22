@@ -6,6 +6,7 @@ require 'pry'
 
 module HexletCode
   class Error < StandardError; end
+  @user_attributes ||= []
 
   def self.form_for(user, url: '#')
     @user = user
@@ -21,8 +22,6 @@ module HexletCode
   end
 
   def self.input(title, as: nil)
-    @user_attributes ||= []
-
     value = @user.public_send(title)
 
     type =
@@ -33,6 +32,7 @@ module HexletCode
         'input'
       end
 
+    @user_attributes << { title => title.capitalize, type: 'label' } if type == 'input'
     @user_attributes << { title => value, type: type }
   end
 
@@ -42,5 +42,9 @@ module HexletCode
 
       HexletCode::Tag.build(type, attribute)
     end
+  end
+
+  def self.submit(action = nil)
+    @user_attributes << { commit: (action || 'Save'), type: 'input' }
   end
 end

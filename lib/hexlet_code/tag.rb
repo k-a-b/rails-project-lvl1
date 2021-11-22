@@ -10,6 +10,7 @@ module HexletCode
       form
       textarea
       div
+      label
     ].freeze
 
     def self.build(tag_name, params = nil, &block)
@@ -28,8 +29,7 @@ module HexletCode
       arr = ["<#{tag_name}"]
       arr << attrs
       arr << '>'
-      arr << block
-      arr << params.values.join if tag_name == 'textarea'
+      arr << body
       arr << close_tag if paired_tag
       arr.compact.join
     end
@@ -38,18 +38,41 @@ module HexletCode
 
     def attrs
       return unless params
-      return input_attrs if tag_name == 'input'
-      return text_area_attrs if tag_name == 'textarea'
 
-      params.map { |k, v| " #{k}=\"#{v}\"" }.join
+      case tag_name.to_s
+      when 'input' then input_attrs
+      when 'textarea' then textarea_attrs
+      when 'label' then label_attrs
+      else standart_attrs
+      end
+    end
+
+    def body
+      return block if block
+
+      params.values.join if %w[textarea label].include? tag_name
     end
 
     def input_attrs
-      params.map { |k, v| " name=\"#{k}\" type=\"text\" value=\"#{v}\"" }.join
+      params.map { |k, v| " name=\"#{k}\" type=\"#{input_type(k)}\"" + (v ? " value=\"#{v}\"" : '') }.join
     end
 
-    def text_area_attrs
+    def input_type(input_name)
+      return 'submit' if input_name.to_s == 'commit'
+
+      'text'
+    end
+
+    def textarea_attrs
       params.map { |k, _v| " cols=\"20\" rows=\"40\" name=\"#{k}\"" }.join
+    end
+
+    def label_attrs
+      params.map { |k, _v| " for=\"#{k}\"" }.join
+    end
+
+    def standart_attrs
+      params.map { |k, v| " #{k}=\"#{v}\"" }.join
     end
 
     def close_tag
