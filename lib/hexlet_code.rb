@@ -37,6 +37,8 @@ module HexletCode
   end
 
   def self.build_inside_tags(attributes)
+    return unless attributes
+
     attributes.map do |attribute|
       type = attribute.delete(:type)
 
