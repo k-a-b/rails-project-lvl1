@@ -81,6 +81,7 @@ module HexletCode
 
     def standart_attrs(params = nil)
       return '' unless params
+      return unless params.is_a?(Hash)
 
       params.map { |k, v| " #{k}=\"#{v}\"" }.join
     end
