@@ -2,7 +2,6 @@
 
 require_relative 'hexlet_code/version'
 require_relative 'hexlet_code/tag'
-require 'pry'
 
 module HexletCode
   class Error < StandardError; end
