@@ -31,7 +31,7 @@ module HexletCode
         'input'
       end
 
-    @user_attributes << { type: 'label', title => title.capitalize } if type == 'input'
+    @user_attributes << { type: 'label', title => title.capitalize }
     @user_attributes << { type: type, title => { value: value }.merge(params) }
   end
 
