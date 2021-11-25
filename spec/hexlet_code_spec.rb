@@ -11,10 +11,14 @@ RSpec.describe HexletCode do
 
     subject do
       described_class.form_for user do |f|
+        f.input :name
       end
     end
 
-    let(:expected_tag) { '<form action="#" method="post"></form>' }
+    let(:expected_tag) do
+      '<form action="#" method="post"><label for="name">' \
+        'Name</label><input name="name" type="text" value="rob"></form>'
+    end
 
     it 'generate tags' do
       expect(subject).to eq(expected_tag)

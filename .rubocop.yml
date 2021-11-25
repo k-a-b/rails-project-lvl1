@@ -10,6 +10,3 @@ Layout/LineLength:
 
 Naming/MethodParameterName:
   Enabled: false
-
-Lint/EmptyBlock:
-  Enabled: false
