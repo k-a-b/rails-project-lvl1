@@ -1,6 +1,5 @@
-language: ruby
 rvm:
-  - ruby-2.7.1
+  - ruby-3.0.2
 
 script:
   - make install

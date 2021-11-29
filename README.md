@@ -19,9 +19,35 @@ Or install it yourself as:
 
     $ gem install hexlet_code
 
-## Development
+## Usage
 
-After checking out the repo, run `make install`
+```ruby
+user = User.new(name: 'rob', job: 'hexlet', gender: 'm')
+
+HexletCode.form_for user do |f|
+  # Проверяет есть ли значение внутри name
+  f.input :name
+  # Проверяет есть ли значение внутри job
+  f.input :job, as: :text
+  f.submit
+end
+
+# <form action="#" method="post">
+#   <input name="name" type="text" value="rob">
+#   <textarea cols="20" rows="40" name="job">hexlet</textarea>
+#   <input name="commit" type="submit" value="Save" >
+# </form>
+```
+
+## Development
+Prerequests:
+`Ruby 3.0`
+`installed bundler`
+
+After cloning the repo,
+run `make install` for instal depencies.
+run `make linter_run`
+run `make test`
 Run `bin/console` for play with app
 
 ## License

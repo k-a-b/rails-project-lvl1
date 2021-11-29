@@ -11,10 +11,13 @@ jobs:
     - name: Set up Ruby
       uses: ruby/setup-ruby@477b21f02be01bcb8030d50f37cfec92bfa615b6
       with:
-        ruby-version: 2.7.1
+        ruby-version: 3.0.2
     
     - name: install dependencies
       run: make install
     
     - name: run linters
       run: make linter_run
+
+    - name: run test
+      run: make test

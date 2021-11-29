@@ -1,5 +1,5 @@
 AllCops:
-  TargetRubyVersion: 2.7.1
+  TargetRubyVersion: 3.0.2
   NewCops: enable
 
 Style/Documentation:
@@ -7,6 +7,3 @@ Style/Documentation:
 
 Layout/LineLength:
   Max: 120
-
-Naming/MethodParameterName:
-  Enabled: false
