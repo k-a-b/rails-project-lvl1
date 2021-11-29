@@ -19,7 +19,7 @@ module HexletCode
 
     attr_reader :tag_name, :params, :block
 
-    def initialize(tag_name, params = nil, &block)
+    def initialize(tag_name, params = {}, &block)
       @tag_name = tag_name.to_s
       @params = params
       @block = block&.call
@@ -43,18 +43,24 @@ module HexletCode
       when 'input' then input_attrs
       when 'textarea' then textarea_attrs
       when 'label' then label_attrs
-      else standart_attrs
+      else standart_attrs(params.values.first)
       end
     end
 
     def body
       return block if block
+      return unless %w[textarea label].include? tag_name
 
-      params.values.join if %w[textarea label].include? tag_name
+      params.values.first.is_a?(Hash) ? params.values.first[:value] : params.values.first
     end
 
     def input_attrs
-      params.map { |k, v| " name=\"#{k}\" type=\"#{input_type(k)}\"" + (v ? " value=\"#{v}\"" : '') }.join
+      params.map do |key, hash|
+        value = hash[:value]
+        " name=\"#{key}\" type=\"#{input_type(key)}\"" +
+          (value ? " value=\"#{value}\"" : '') +
+          standart_attrs(hash.slice(:class))
+      end.join
     end
 
     def input_type(input_name)
@@ -64,14 +70,19 @@ module HexletCode
     end
 
     def textarea_attrs
-      params.map { |k, _v| " cols=\"20\" rows=\"40\" name=\"#{k}\"" }.join
+      params.map do |key, hash|
+        " cols=\"#{hash[:cols]}\" rows=\"#{hash[:rows]}\" name=\"#{key}\""
+      end.join
     end
 
     def label_attrs
       params.map { |k, _v| " for=\"#{k}\"" }.join
     end
 
-    def standart_attrs
+    def standart_attrs(params = nil)
+      return '' unless params
+      return unless params.is_a?(Hash)
+
       params.map { |k, v| " #{k}=\"#{v}\"" }.join
     end
 

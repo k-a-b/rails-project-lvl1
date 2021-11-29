@@ -2,7 +2,6 @@
 
 require_relative 'hexlet_code/version'
 require_relative 'hexlet_code/tag'
-require 'pry'
 
 module HexletCode
   class Error < StandardError; end
@@ -18,25 +17,27 @@ module HexletCode
 
     user_attrs = yield self
 
-    HexletCode::Tag.build('form', params) { build_inside_tags(user_attrs) }
+    HexletCode::Tag.build('form', params: params) { build_inside_tags(user_attrs) }
   end
 
-  def self.input(title, as: nil)
+  def self.input(title, params = {})
     value = @user.public_send(title)
 
     type =
-      case as
+      case params[:as]
       when :text
         @user[title].is_a?(String) ? 'textarea' : raise(WrongFormatError)
       else
         'input'
       end
 
-    @user_attributes << { title => title.capitalize, type: 'label' } if type == 'input'
-    @user_attributes << { title => value, type: type }
+    @user_attributes << { type: 'label', title => title.capitalize }
+    @user_attributes << { type: type, title => { value: value }.merge(params) }
   end
 
   def self.build_inside_tags(attributes)
+    return unless attributes
+
     attributes.map do |attribute|
       type = attribute.delete(:type)
 
@@ -45,6 +46,6 @@ module HexletCode
   end
 
   def self.submit(action = nil)
-    @user_attributes << { commit: (action || 'Save'), type: 'input' }
+    @user_attributes << { type: 'input', commit: { value: (action || 'Save') } }
   end
 end
