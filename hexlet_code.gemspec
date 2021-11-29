@@ -12,7 +12,7 @@ Gem::Specification.new do |spec|
   spec.description   = 'simple form generator'
   spec.homepage      = 'https://github.com/k-a-b/rails-project-lvl1.git'
   spec.license       = 'MIT'
-  spec.required_ruby_version = Gem::Requirement.new('>= 3.0.2')
+  spec.required_ruby_version = Gem::Requirement.new('>= 3.0.0')
 
   spec.metadata['allowed_push_host'] = 'https://rubygems.org'
 
